@@ -1,0 +1,185 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import ButtonLink from '@/components/ui/ButtonLink.astro';
+import Breadcrumbs from '@/components/ui/Breadcrumbs.astro';
+import Placeholder from '@/components/ui/Placeholder.astro';
+import { site } from '@/config/site';
+import { breadcrumbSchema, topicPageSchema, personSchema, type Crumb } from '@/lib/schema';
+
+const path = '/technical-seo/';
+const title = `Technical SEO — ${site.name}`;
+const description =
+  'How I approach technical SEO: crawling, rendering, indexing, site architecture, structured data and website performance, and how I prioritise fixes that make a difference.';
+
+const crumbs: Crumb[] = [
+  { name: 'Home', path: '/' },
+  { name: 'Technical SEO', path },
+];
+
+const siteUrl = Astro.site ?? new URL(Astro.url.origin);
+
+const areas = [
+  {
+    title: 'Crawling',
+    text: 'Making sure search engines can reach the pages that matter — robots.txt, XML sitemaps, server responses, redirects and how crawl activity is spent across a site.',
+  },
+  {
+    title: 'Rendering',
+    text: 'Checking that content and links are present in the rendered page, especially on JavaScript-heavy sites where what users see and what crawlers process can differ.',
+  },
+  {
+    title: 'Indexing',
+    text: 'Controlling which pages should be indexed — canonical tags, meta robots, duplicate and near-duplicate content, parameters and thin pages.',
+  },
+  {
+    title: 'Site architecture',
+    text: 'Logical URL structures and internal linking that make important pages easy to find, for people and for search engines.',
+  },
+  {
+    title: 'Structured data',
+    text: 'Accurate schema markup that describes what a page is about, validated and kept consistent with the visible content.',
+  },
+  {
+    title: 'Performance',
+    text: 'Core Web Vitals and page speed — images, fonts, scripts and server response — treated as both a ranking consideration and a user experience one.',
+  },
+  {
+    title: 'Mobile and accessibility',
+    text: 'Pages that work properly on any device, with semantic HTML and accessible navigation that benefit everyone, including search engines.',
+  },
+  {
+    title: 'Migrations and change',
+    text: 'Planning redesigns, replatforms and domain changes so that rankings and links carry over, with redirect mapping and post-launch checks.',
+  },
+];
+
+const steps = [
+  {
+    title: 'Audit',
+    text: 'Crawl the site, review search and analytics data and look at how key templates are built and rendered. The aim is to understand the site as a whole, not to produce the longest possible list of issues.',
+  },
+  {
+    title: 'Prioritise',
+    text: 'Rank findings by likely impact and effort. A handful of well-chosen fixes on the templates that drive most organic traffic usually matters more than dozens of minor warnings.',
+  },
+  {
+    title: 'Implement',
+    text: 'Write clear, specific recommendations and work with developers and content teams to get them shipped — explaining the why, not just the what.',
+  },
+  {
+    title: 'Validate and monitor',
+    text: 'Confirm changes are live and behaving as expected, then track crawling, indexing and performance over time so regressions are caught early.',
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={path}
+  type="website"
+  schema={[
+    topicPageSchema(siteUrl, { path, name: title, description, about: 'Technical SEO' }),
+    breadcrumbSchema(siteUrl, crumbs),
+    personSchema(siteUrl),
+  ]}
+>
+  <section aria-labelledby="page-title" class="border-b border-line">
+    <div class="page-container pt-12 pb-16 md:pt-16 md:pb-24">
+      <Breadcrumbs crumbs={crumbs} />
+      <p class="eyebrow mt-12 flex items-center gap-3">
+        <span class="inline-block size-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+        Area of expertise
+      </p>
+      <h1 id="page-title" class="mt-6 text-display font-[380]">Technical SEO</h1>
+      <div class="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-16">
+        <p class="max-w-(--container-prose) text-lead text-ink-muted">
+          Technical SEO is the groundwork that lets everything else work. If search engines can’t crawl,
+          render and index a site properly, even the best content struggles to be found. This page sets
+          out what that work covers for me and how I go about it.
+        </p>
+        <nav aria-label="On this page" class="self-start border-t border-ink pt-4">
+          <p class="eyebrow mb-3">On this page</p>
+          <ol class="space-y-2 text-[0.9375rem]">
+            <li><a href="#what-it-covers" class="link-underline text-ink-muted">What it covers</a></li>
+            <li><a href="#approach" class="link-underline text-ink-muted">How I approach it</a></li>
+            <li><a href="#examples" class="link-underline text-ink-muted">Examples of my work</a></li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section id="what-it-covers" aria-labelledby="covers-title" class="section-space">
+    <div class="page-container">
+      <SectionHeader index="01" label="Scope" title="What it covers" id="covers-title">
+        <p>The areas I look at when reviewing a website’s technical health.</p>
+      </SectionHeader>
+
+      <ul class="mt-12 grid border-t border-line md:grid-cols-2">
+        {
+          areas.map((area, i) => (
+            <li class:list={[
+              'border-b border-line py-8',
+              i % 2 === 1 ? 'md:border-l md:pl-10' : 'md:pr-10',
+            ]}>
+              <span class="font-mono text-xs text-accent tabular-nums" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 class="mt-3 text-title">{area.title}</h3>
+              <p class="mt-2 text-[0.9375rem] leading-relaxed text-ink-muted">{area.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="approach" aria-labelledby="approach-title" class="section-space border-y border-line bg-surface">
+    <div class="page-container">
+      <SectionHeader index="02" label="Process" title="How I approach it" id="approach-title">
+        <p>A simple, repeatable process — the value is in the judgement applied at each step.</p>
+      </SectionHeader>
+
+      <ol class="mt-12 border-t border-line">
+        {
+          steps.map((step, i) => (
+            <li class="grid gap-3 border-b border-line py-8 md:grid-cols-[minmax(0,14rem)_1fr] md:gap-10">
+              <p class="font-mono text-sm text-accent tabular-nums">Step {String(i + 1).padStart(2, '0')}</p>
+              <div class="max-w-3xl">
+                <h3 class="text-title">{step.title}</h3>
+                <p class="mt-2 text-ink-muted">{step.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section id="examples" aria-labelledby="examples-title" class="section-space">
+    <div class="page-container">
+      <SectionHeader index="03" label="Examples" title="Examples of my work" id="examples-title">
+        <p>
+          Case studies with technical SEO at their core are collected in the projects section of the
+          homepage.
+        </p>
+      </SectionHeader>
+
+      <div class="mt-12 grid gap-6 md:grid-cols-[minmax(0,14rem)_1fr] md:gap-10">
+        <div aria-hidden="true" class="hidden md:block"></div>
+        <div class="space-y-8">
+          <Placeholder>
+            Optional — add a short example or two of technical problems you’ve worked on, without
+            client names or unverified figures.
+          </Placeholder>
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-3">
+            <ButtonLink href="/#projects">See selected projects</ButtonLink>
+            <ButtonLink href="/#contact" variant="secondary">Get in touch</ButtonLink>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -70,14 +70,17 @@ export const site = {
   },
 } as const;
 
-/** Homepage section anchors, shared by the header and footer navigation. */
+/**
+ * Main navigation, shared by the header and footer. Root-relative
+ * (/#section) so links work from every page, not just the homepage.
+ */
 export const navigation = [
-  { label: 'Home', href: '#top' },
-  { label: 'About', href: '#about' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Articles', href: '#articles' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/#about' },
+  { label: 'Experience', href: '/#experience' },
+  { label: 'Projects', href: '/#projects' },
+  { label: 'Articles', href: '/#articles' },
+  { label: 'Contact', href: '/#contact' },
 ] as const;
 
 /** All configured profile links (LinkedIn first), with empty ones removed. */

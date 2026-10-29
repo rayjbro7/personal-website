@@ -16,8 +16,19 @@ import { expertise } from '@/data/expertise';
             <span class="font-mono text-xs text-accent tabular-nums" aria-hidden="true">
               {String(i + 1).padStart(2, '0')}
             </span>
-            <h3 class="mt-4 text-title">{area.title}</h3>
+            <h3 class="mt-4 text-title">
+              {area.href ? (
+                <a href={area.href} class="transition-colors hover:text-accent">{area.title}</a>
+              ) : (
+                area.title
+              )}
+            </h3>
             <p class="mt-3 text-[0.9375rem] leading-relaxed text-ink-muted">{area.description}</p>
+            {area.href && (
+              <a href={area.href} class="link-underline mt-4 inline-flex items-center gap-2 text-[0.9375rem] font-medium" aria-hidden="true" tabindex="-1">
+                How I approach {area.title.toLowerCase().replace('seo', 'SEO')} <span>→</span>
+              </a>
+            )}
           </li>
         ))
       }

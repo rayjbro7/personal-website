@@ -25,6 +25,7 @@ Requires Node 22+.
 | `src/content/articles/` | Article Markdown files |
 | `src/content.config.ts` | Content collection schemas |
 | `src/pages/index.astro` | Homepage (assembles the sections) |
+| `src/pages/technical-seo.astro` | Technical SEO page (`/technical-seo/`), linked from the expertise section |
 | `src/pages/robots.txt.ts` | robots.txt (points to the sitemap) |
 | `src/layouts/BaseLayout.astro` | HTML shell, fonts, header/footer |
 | `src/components/layout/` | `SeoHead`, `SiteHeader`, `SiteFooter` |

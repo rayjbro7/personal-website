@@ -2,11 +2,14 @@
 export interface ExpertiseArea {
   title: string;
   description: string;
+  /** Optional link to a dedicated page for this area. */
+  href?: string;
 }
 
 export const expertise: ExpertiseArea[] = [
   {
     title: 'Technical SEO',
+    href: '/technical-seo/',
     description:
       'Making sure search engines can crawl, render and index a site properly — site architecture, internal linking, canonicalisation, structured data and the details that quietly hold rankings back.',
   },

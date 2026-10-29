@@ -54,3 +54,41 @@ export function profilePageSchema(siteUrl: URL) {
     mainEntity: { '@id': new URL('/#person', siteUrl).href },
   };
 }
+
+export interface Crumb {
+  name: string;
+  path: string;
+}
+
+export function breadcrumbSchema(siteUrl: URL, crumbs: Crumb[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map((crumb, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: crumb.name,
+      item: new URL(crumb.path, siteUrl).href,
+    })),
+  };
+}
+
+/** WebPage describing a topic page, authored by the site owner. */
+export function topicPageSchema(
+  siteUrl: URL,
+  page: { path: string; name: string; description: string; about: string },
+) {
+  const url = new URL(page.path, siteUrl).href;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: page.name,
+    description: page.description,
+    inLanguage: site.lang,
+    about: { '@type': 'Thing', name: page.about },
+    isPartOf: { '@id': new URL('/#website', siteUrl).href },
+    author: { '@id': new URL('/#person', siteUrl).href },
+  };
+}
