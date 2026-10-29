@@ -29,19 +29,21 @@
 
   /* Colour — palette 02 "Navy & Premium"
      Brand: navy #142D4E · teal #168C86 · off-white #F8F7F3 · pale teal #E7F3F0 · charcoal #29343D
-     Text-level teal is brightened (#3DBDB5) and button teal deepened (#127A75)
-     so both meet WCAG AA contrast on navy / with off-white text. */
-  --color-paper: #142d4e;
-  --color-surface: #183559;
-  --color-sunken: #0f2440;
-  --color-ink: #f8f7f3;
-  --color-ink-muted: #b4c2d1;
-  --color-ink-subtle: #8fa2b8;
-  --color-line: #2a4566;
-  --color-line-strong: #3d5a7e;
-  --color-accent: #3dbdb5;
-  --color-accent-strong: #e7f3f0;
-  --color-accent-soft: #17405a;
+     Default (light) tokens are used by the main content sections:
+     off-white #F8F7F3 alternating with pale teal #E7F3F0.
+     Navy areas (header, hero, footer) use the .theme-navy overrides below.
+     Teal shades are adjusted so text meets WCAG AA contrast. */
+  --color-paper: #f8f7f3;
+  --color-surface: #e7f3f0;
+  --color-sunken: #efeee8;
+  --color-ink: #142d4e;
+  --color-ink-muted: #4a5868;
+  --color-ink-subtle: #5c6b7c;
+  --color-line: #d5dedd;
+  --color-line-strong: #b3c1c3;
+  --color-accent: #127a75;
+  --color-accent-strong: #0f5f5b;
+  --color-accent-soft: #d3ebe6;
   --color-accent-fill: #127a75;
   --color-accent-fill-hover: #0f6a66;
   --color-on-accent: #f8f7f3;
@@ -60,12 +62,30 @@
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Navy areas: same token names, navy values. Add class="theme-navy"
+   to any wrapper (header, hero, footer) to switch it to the navy theme. */
+.theme-navy {
+  --color-paper: #142d4e;
+  --color-surface: #183559;
+  --color-sunken: #0f2440;
+  --color-ink: #f8f7f3;
+  --color-ink-muted: #b4c2d1;
+  --color-ink-subtle: #8fa2b8;
+  --color-line: #2a4566;
+  --color-line-strong: #3d5a7e;
+  --color-accent: #3dbdb5;
+  --color-accent-strong: #e7f3f0;
+  --color-accent-soft: #17405a;
+  color-scheme: dark;
+  color: var(--color-ink);
+}
+
 /* ------------------------------------------------------------------
    Base
    ------------------------------------------------------------------ */
 @layer base {
   :root {
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   html {
