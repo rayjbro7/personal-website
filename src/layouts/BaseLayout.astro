@@ -1,10 +1,10 @@
 ---
-import '@fontsource-variable/fraunces/opsz.css';
-import '@fontsource-variable/instrument-sans';
+import '@fontsource-variable/inter-tight';
+import '@fontsource-variable/inter';
 import '@/styles/global.css';
 
-import frauncesLatin from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2?url';
-import instrumentLatin from '@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2?url';
+import headingFont from '@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2?url';
+import bodyFont from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 
 import SeoHead, { type Props as SeoProps } from '@/components/layout/SeoHead.astro';
 import SiteHeader from '@/components/layout/SiteHeader.astro';
@@ -22,8 +22,8 @@ const seo = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#142d4e" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" href={frauncesLatin} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={instrumentLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={headingFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
     <SeoHead {...seo} />
   </head>
   <body class="bg-paper text-ink antialiased">

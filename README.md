@@ -42,7 +42,7 @@ Edit the `@theme` block in `src/styles/global.css`:
 - `--color-accent` (teal for text/details), `--color-accent-fill` (button teal) and `--color-accent-soft` — the accent.
 - `--color-paper`, `--color-surface`, `--color-ink`, `--color-ink-muted`, `--color-line` — neutrals.
 - Current palette: navy #142D4E, teal #168C86, off-white #F8F7F3, pale teal #E7F3F0, charcoal #29343D.
-- `--font-display` (headings, Fraunces) and `--font-sans` (body, Instrument Sans).
+- `--font-display` (headings, Inter Tight) and `--font-sans` (body, Inter).
   To swap a font: `npm i @fontsource-variable/<font>`, update the imports and preload paths at the
   top of `src/layouts/BaseLayout.astro`, then change the token.
 - `--text-display`, `--text-headline`, `--text-title`, `--text-lead` — the fluid type scale.
