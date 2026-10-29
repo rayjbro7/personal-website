@@ -27,19 +27,25 @@
   --text-eyebrow--line-height: 1.2;
   --text-eyebrow--letter-spacing: 0.14em;
 
-  /* Colour — neutral paper, ink, one accent */
-  --color-paper: #f6f4ef;
-  --color-surface: #fcfbf8;
-  --color-sunken: #efece5;
-  --color-ink: #16181d;
-  --color-ink-muted: #51555e;
-  --color-ink-subtle: #73767d;
-  --color-line: #dfdbd2;
-  --color-line-strong: #c9c4b8;
-  --color-accent: #b03a1c;
-  --color-accent-strong: #8d2c12;
-  --color-accent-soft: #f2e2da;
-  --color-on-accent: #fffaf6;
+  /* Colour — palette 02 "Navy & Premium"
+     Brand: navy #142D4E · teal #168C86 · off-white #F8F7F3 · pale teal #E7F3F0 · charcoal #29343D
+     Text-level teal is brightened (#3DBDB5) and button teal deepened (#127A75)
+     so both meet WCAG AA contrast on navy / with off-white text. */
+  --color-paper: #142d4e;
+  --color-surface: #183559;
+  --color-sunken: #0f2440;
+  --color-ink: #f8f7f3;
+  --color-ink-muted: #b4c2d1;
+  --color-ink-subtle: #8fa2b8;
+  --color-line: #2a4566;
+  --color-line-strong: #3d5a7e;
+  --color-accent: #3dbdb5;
+  --color-accent-strong: #e7f3f0;
+  --color-accent-soft: #17405a;
+  --color-accent-fill: #127a75;
+  --color-accent-fill-hover: #0f6a66;
+  --color-on-accent: #f8f7f3;
+  --color-charcoal: #29343d;
 
   /* Layout */
   --container-page: 76rem;
@@ -54,30 +60,12 @@
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Dark mode: same token names, different values. */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-paper: #121316;
-    --color-surface: #18191d;
-    --color-sunken: #0d0e10;
-    --color-ink: #ecebe6;
-    --color-ink-muted: #a9aab0;
-    --color-ink-subtle: #8a8c93;
-    --color-line: #2a2c31;
-    --color-line-strong: #3a3d43;
-    --color-accent: #ec7f5d;
-    --color-accent-strong: #f49c80;
-    --color-accent-soft: #2c1b15;
-    --color-on-accent: #1a0c07;
-  }
-}
-
 /* ------------------------------------------------------------------
    Base
    ------------------------------------------------------------------ */
 @layer base {
   :root {
-    color-scheme: light dark;
+    color-scheme: dark;
   }
 
   html {
@@ -116,7 +104,7 @@
   }
 
   ::selection {
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-fill);
     color: var(--color-on-accent);
   }
 
