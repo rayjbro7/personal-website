@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import ArticleCard from '@/components/ui/ArticleCard.astro';
+import Placeholder from '@/components/ui/Placeholder.astro';
+
+/** Number of latest articles shown on the homepage. */
+const LIMIT = 3;
+
+const articles = (await getCollection('articles', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, LIMIT);
+---
+
+<section id="articles" aria-labelledby="articles-title" class="section-space">
+  <div class="page-container">
+    <SectionHeader index="05" label="Articles" title="Articles and insights" id="articles-title">
+      <p>Writing on technical SEO, content and what I’m learning from day-to-day search work.</p>
+    </SectionHeader>
+
+    {
+      articles.length > 0 ? (
+        <div class="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          {articles.map((article) => <ArticleCard article={article} />)}
+        </div>
+      ) : (
+        <div class="mt-12 grid gap-4 border-t border-line pt-10 md:grid-cols-[minmax(0,14rem)_1fr] md:gap-10">
+          <div aria-hidden="true" class="hidden md:block" />
+          <div class="max-w-(--container-prose) space-y-4">
+            <p class="font-display text-title">The first articles are in progress.</p>
+            <p class="text-ink-muted">
+              New pieces will be listed here as they are published.
+            </p>
+            <Placeholder>Add Markdown files to src/content/articles/ — see _template.md</Placeholder>
+          </div>
+        </div>
+      )
+    }
+  </div>
+</section>

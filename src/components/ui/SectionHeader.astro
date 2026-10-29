@@ -1,0 +1,28 @@
+---
+/**
+ * Editorial section header: index number, eyebrow label and H2.
+ * Optional intro paragraph via the default slot.
+ */
+export interface Props {
+  index: string;
+  label: string;
+  title: string;
+  id: string;
+}
+const { index, label, title, id } = Astro.props;
+---
+
+<header class="grid gap-6 border-t border-ink pt-6 md:grid-cols-[minmax(0,14rem)_1fr] md:gap-10">
+  <p class="eyebrow flex items-center gap-3">
+    <span class="text-accent tabular-nums">{index}</span>
+    <span>{label}</span>
+  </p>
+  <div class="max-w-3xl">
+    <h2 id={id} class="text-headline">{title}</h2>
+    {Astro.slots.has('default') && (
+      <div class="mt-5 max-w-(--container-prose) text-lead text-ink-muted">
+        <slot />
+      </div>
+    )}
+  </div>
+</header>

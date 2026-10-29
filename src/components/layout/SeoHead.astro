@@ -1,0 +1,63 @@
+---
+/**
+ * Page-level SEO metadata: title, description, canonical, robots,
+ * Open Graph, Twitter card and JSON-LD structured data.
+ * Reused by every future page via BaseLayout.
+ */
+import { site } from '@/config/site';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  /** Path or absolute URL for the canonical link. Defaults to the current path. */
+  canonical?: string;
+  /** Path (in /public) or absolute URL of the social image. */
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'article' | 'profile';
+  noindex?: boolean;
+  /** One or more JSON-LD objects. */
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title = site.meta.title,
+  description = site.meta.description,
+  canonical,
+  image = site.meta.ogImage,
+  imageAlt = `${site.name} — ${site.jobTitle}`,
+  type = 'website',
+  noindex = false,
+  schema,
+} = Astro.props;
+
+const canonicalUrl = new URL(canonical ?? Astro.url.pathname, Astro.site);
+const imageUrl = new URL(image, Astro.site);
+const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+<meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
+<meta name="author" content={site.name} />
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:locale" content={site.locale} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={imageAlt} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+
+<link rel="sitemap" href="/sitemap-index.xml" />
+
+{schemas.map((item) => <script type="application/ld+json" is:inline set:html={JSON.stringify(item)} />)}

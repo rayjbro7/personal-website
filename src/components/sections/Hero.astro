@@ -1,0 +1,137 @@
+---
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { site } from '@/config/site';
+import ButtonLink from '@/components/ui/ButtonLink.astro';
+import Placeholder from '@/components/ui/Placeholder.astro';
+
+/*
+ * Portrait: drop an image named portrait.jpg / .jpeg / .png / .webp into
+ * src/assets/ and it is picked up automatically, resized and served as
+ * AVIF/WebP with responsive srcset. Until then, a monogram frame is shown.
+ */
+const portraits = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/portrait.{jpg,jpeg,png,webp,avif}',
+  { eager: true },
+);
+const portrait = Object.values(portraits)[0]?.default;
+
+const initials = site.name
+  .split(/\s+/)
+  .map((part) => part[0])
+  .join('')
+  .slice(0, 2);
+
+const focusAreas = ['Organic search visibility', 'Technical SEO', 'Content strategy', 'Website performance'];
+const linkedin = site.social.linkedin.url;
+---
+
+<section id="top" aria-labelledby="hero-title" class="relative overflow-hidden">
+  <div class="page-container grid items-end gap-12 pt-14 pb-16 md:grid-cols-[minmax(0,1fr)_minmax(0,19rem)] md:gap-16 md:pt-24 md:pb-24 lg:grid-cols-[minmax(0,1fr)_minmax(0,23rem)]">
+    <div class="hero-copy">
+      <p class="eyebrow mb-8 flex items-center gap-3">
+        <span class="inline-block size-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+        {site.jobTitle} at {site.employer.name}
+      </p>
+
+      <h1 id="hero-title" class="text-display font-[380]">
+        {site.name}
+      </h1>
+
+      <p class="mt-6 font-display text-title text-ink-muted">
+        I work on how websites are found, understood and chosen in&nbsp;search.
+      </p>
+
+      <p class="mt-6 max-w-(--container-prose) text-lead text-ink-muted">
+        As {site.jobTitle} at {site.employer.name}, my focus is organic search visibility: the technical
+        foundations that let search engines crawl and index a site, the content that answers what people
+        are really looking for, and the performance that keeps a page fast and usable.
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center gap-x-4 gap-y-3">
+        <ButtonLink href="#projects">Explore My Work</ButtonLink>
+        <ButtonLink href="#contact" variant="secondary">Get in Touch</ButtonLink>
+        {
+          linkedin ? (
+            <ButtonLink href={linkedin} variant="text" rel="me noopener" target="_blank" class="ml-1">
+              LinkedIn<span class="sr-only"> (opens in a new tab)</span>
+            </ButtonLink>
+          ) : (
+            <Placeholder as="span" class="ml-1">LinkedIn URL — add in site config</Placeholder>
+          )
+        }
+      </div>
+    </div>
+
+    <figure class="hero-portrait mx-auto w-full max-w-[19rem] md:mx-0 md:max-w-none">
+      <div class="relative aspect-[4/5] overflow-hidden rounded-panel border border-line bg-sunken">
+        {
+          portrait ? (
+            <Picture
+              src={portrait}
+              alt={`Portrait of ${site.name}`}
+              formats={['avif', 'webp']}
+              widths={[320, 480, 640, 800]}
+              sizes="(min-width: 64rem) 23rem, (min-width: 48rem) 19rem, 19rem"
+              loading="eager"
+              fetchpriority="high"
+              class="size-full object-cover"
+            />
+          ) : (
+            <div class="flex size-full flex-col justify-between p-6" role="img" aria-label="Portrait to be added">
+              <span class="eyebrow">Portrait</span>
+              <span class="font-display text-[clamp(5rem,3rem+6vw,8rem)] leading-none font-[300] text-line-strong" aria-hidden="true">
+                {initials}
+              </span>
+            </div>
+          )
+        }
+      </div>
+      {!portrait && (
+        <figcaption class="mt-3">
+          <Placeholder as="span">Add src/assets/portrait.jpg</Placeholder>
+        </figcaption>
+      )}
+    </figure>
+  </div>
+
+  <div class="border-y border-line bg-surface">
+    <div class="page-container">
+      <ul class="grid grid-cols-2 md:grid-cols-4" aria-label="Areas of focus">
+        {
+          focusAreas.map((area, i) => (
+            <li class:list={[
+              'flex items-center gap-3 py-5 text-[0.9375rem] text-ink-muted',
+              i % 2 === 1 && 'border-l border-line pl-5',
+              i > 0 && 'md:border-l md:border-line md:pl-6',
+              i > 1 && 'border-t border-line md:border-t-0',
+            ]}>
+              <span class="font-mono text-xs text-accent tabular-nums" aria-hidden="true">0{i + 1}</span>
+              {area}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Subtle entrance for supporting copy only. The H1 and portrait are
+     left static so the Largest Contentful Paint is never delayed. */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-copy > :not(h1) {
+      animation: rise 600ms var(--ease-out-soft) both;
+    }
+    .hero-copy > :nth-child(3) { animation-delay: 80ms; }
+    .hero-copy > :nth-child(4) { animation-delay: 140ms; }
+    .hero-copy > :nth-child(5) { animation-delay: 200ms; }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+</style>

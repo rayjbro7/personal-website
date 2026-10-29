@@ -1,0 +1,173 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   Design tokens
+   Change colours, fonts and the type scale here — every component
+   reads from these values through Tailwind utilities (bg-paper,
+   text-ink, font-display, text-display, etc.).
+   ------------------------------------------------------------------ */
+@theme {
+  /* Typography */
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Fluid type scale */
+  --text-display: clamp(3rem, 1.5rem + 6.2vw, 6.75rem);
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.03em;
+  --text-headline: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+  --text-headline--line-height: 1.05;
+  --text-headline--letter-spacing: -0.02em;
+  --text-title: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
+  --text-title--line-height: 1.25;
+  --text-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  --text-lead--line-height: 1.6;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.2;
+  --text-eyebrow--letter-spacing: 0.14em;
+
+  /* Colour — neutral paper, ink, one accent */
+  --color-paper: #f6f4ef;
+  --color-surface: #fcfbf8;
+  --color-sunken: #efece5;
+  --color-ink: #16181d;
+  --color-ink-muted: #51555e;
+  --color-ink-subtle: #73767d;
+  --color-line: #dfdbd2;
+  --color-line-strong: #c9c4b8;
+  --color-accent: #b03a1c;
+  --color-accent-strong: #8d2c12;
+  --color-accent-soft: #f2e2da;
+  --color-on-accent: #fffaf6;
+
+  /* Layout */
+  --container-page: 76rem;
+  --container-prose: 40rem;
+  --spacing-gutter: clamp(1.25rem, 0.8rem + 2vw, 2.5rem);
+  --spacing-section: clamp(4.5rem, 3rem + 6vw, 8.5rem);
+  --spacing-header: 4.25rem;
+
+  /* Components */
+  --radius-control: 0.375rem;
+  --radius-panel: 0.625rem;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Dark mode: same token names, different values. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-paper: #121316;
+    --color-surface: #18191d;
+    --color-sunken: #0d0e10;
+    --color-ink: #ecebe6;
+    --color-ink-muted: #a9aab0;
+    --color-ink-subtle: #8a8c93;
+    --color-line: #2a2c31;
+    --color-line-strong: #3a3d43;
+    --color-accent: #ec7f5d;
+    --color-accent-strong: #f49c80;
+    --color-accent-soft: #2c1b15;
+    --color-on-accent: #1a0c07;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+
+  html {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    scroll-padding-top: calc(var(--spacing-header) + 1rem);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    min-height: 100dvh;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 420;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Component utilities
+   ------------------------------------------------------------------ */
+@utility page-container {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+}
+
+@utility section-space {
+  padding-block: var(--spacing-section);
+}
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  line-height: var(--text-eyebrow--line-height);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+@utility link-underline {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: var(--color-line-strong);
+  transition: text-decoration-color 160ms var(--ease-out-soft), color 160ms var(--ease-out-soft);
+  &:hover {
+    color: var(--color-accent);
+    text-decoration-color: currentColor;
+  }
+}
+
+@utility placeholder-note {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--color-ink-subtle);
+  border: 1px dashed var(--color-line-strong);
+  border-radius: var(--radius-control);
+  padding: 0.5rem 0.75rem;
+}

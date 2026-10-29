@@ -1,0 +1,76 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Placeholder from '@/components/ui/Placeholder.astro';
+import { site } from '@/config/site';
+
+const { email } = site.contact;
+const linkedin = site.social.linkedin.url;
+const others = site.social.others.filter((profile) => profile.url);
+
+const prettyUrl = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+---
+
+<section id="contact" aria-labelledby="contact-title" class="section-space border-t border-line bg-surface">
+  <div class="page-container">
+    <SectionHeader index="06" label="Contact" title="Get in touch" id="contact-title">
+      <p>
+        Whether you’d like to talk about search, compare notes on a project or simply connect, I’m happy
+        to hear from you.
+      </p>
+    </SectionHeader>
+
+    <div class="mt-12 grid gap-4 md:grid-cols-[minmax(0,14rem)_1fr] md:gap-10">
+      <div aria-hidden="true" class="hidden md:block"></div>
+      <dl class="max-w-3xl divide-y divide-line border-y border-line">
+        {(email || site.showPlaceholders) && (
+        <div class="grid gap-1 py-6 sm:grid-cols-[9rem_1fr] sm:items-baseline">
+          <dt class="eyebrow">Email</dt>
+          <dd>
+            {email ? (
+              <a href={`mailto:${email}`} class="link-underline font-display text-title break-all">{email}</a>
+            ) : (
+              <Placeholder as="span" class="inline-block">Email address — add in src/config/site.ts</Placeholder>
+            )}
+          </dd>
+        </div>
+        )}
+
+        {(linkedin || site.showPlaceholders) && (
+        <div class="grid gap-1 py-6 sm:grid-cols-[9rem_1fr] sm:items-baseline">
+          <dt class="eyebrow">LinkedIn</dt>
+          <dd>
+            {linkedin ? (
+              <a href={linkedin} rel="me noopener" target="_blank" class="link-underline font-display text-title">
+                {prettyUrl(linkedin)}<span class="sr-only"> (opens in a new tab)</span>
+              </a>
+            ) : (
+              <Placeholder as="span" class="inline-block">LinkedIn profile URL — add in src/config/site.ts</Placeholder>
+            )}
+          </dd>
+        </div>
+        )}
+
+        {(others.length > 0 || site.showPlaceholders) && (
+          <div class="grid gap-1 py-6 sm:grid-cols-[9rem_1fr] sm:items-baseline">
+            <dt class="eyebrow">Elsewhere</dt>
+            <dd>
+              {others.length > 0 ? (
+                <ul class="flex flex-wrap gap-x-6 gap-y-2">
+                  {others.map((profile) => (
+                    <li>
+                      <a href={profile.url} rel="me noopener" target="_blank" class="link-underline">
+                        {profile.label}<span class="sr-only"> (opens in a new tab)</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <Placeholder as="span" class="inline-block">Other professional profiles — optional</Placeholder>
+              )}
+            </dd>
+          </div>
+        )}
+      </dl>
+    </div>
+  </div>
+</section>

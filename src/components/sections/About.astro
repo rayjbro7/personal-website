@@ -1,0 +1,62 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Placeholder from '@/components/ui/Placeholder.astro';
+
+const strands = [
+  {
+    title: 'Technical understanding',
+    text: 'Knowing how search engines crawl, render and index pages, and how a site’s build affects all three.',
+  },
+  {
+    title: 'Content strategy',
+    text: 'Matching content to real search behaviour and making sure each page has a clear purpose.',
+  },
+  {
+    title: 'Data-led decisions',
+    text: 'Letting search and analytics data — not assumptions — decide what gets prioritised.',
+  },
+];
+---
+
+<section id="about" aria-labelledby="about-title" class="section-space">
+  <div class="page-container">
+    <SectionHeader index="01" label="About" title="Search is part technical, part editorial and part analytical." id="about-title" />
+
+    <div class="mt-12 grid gap-12 md:grid-cols-[minmax(0,14rem)_1fr] md:gap-10">
+      <div aria-hidden="true" class="hidden md:block"></div>
+      <div class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] lg:gap-16">
+        <div class="max-w-(--container-prose) space-y-5 text-ink-muted">
+          <p class="text-lead text-ink">
+            I’m an SEO professional focused on organic growth — helping websites become easier to find,
+            easier to understand and more useful to the people who land on them.
+          </p>
+          <p>
+            Good SEO rarely comes down to one thing. It sits where a site’s technical foundations, its
+            content and the data behind both meet. My work moves between all three: fixing what stops
+            pages being crawled and indexed, shaping content around what people actually search for, and
+            using evidence to decide what is worth doing next.
+          </p>
+          <p>
+            I care about work that holds up over time — clear site structures, pages that load quickly,
+            and decisions that can be explained in plain language to anyone involved.
+          </p>
+          <Placeholder>
+            Personal background — add a few sentences about how you came to SEO, what you enjoy about
+            the work and anything outside work you’d like to share.
+          </Placeholder>
+        </div>
+
+        <ul class="divide-y divide-line border-y border-line self-start">
+          {
+            strands.map((strand) => (
+              <li class="py-5">
+                <h3 class="font-sans text-[0.9375rem] font-semibold tracking-normal">{strand.title}</h3>
+                <p class="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-muted">{strand.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

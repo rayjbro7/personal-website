@@ -1,0 +1,27 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/sections/Hero.astro';
+import About from '@/components/sections/About.astro';
+import Expertise from '@/components/sections/Expertise.astro';
+import Experience from '@/components/sections/Experience.astro';
+import Projects from '@/components/sections/Projects.astro';
+import Articles from '@/components/sections/Articles.astro';
+import Contact from '@/components/sections/Contact.astro';
+import { personSchema, websiteSchema, profilePageSchema } from '@/lib/schema';
+
+const siteUrl = Astro.site ?? new URL(Astro.url.origin);
+---
+
+<BaseLayout
+  type="profile"
+  canonical="/"
+  schema={[personSchema(siteUrl), websiteSchema(siteUrl), profilePageSchema(siteUrl)]}
+>
+  <Hero />
+  <About />
+  <Expertise />
+  <Experience />
+  <Projects />
+  <Articles />
+  <Contact />
+</BaseLayout>

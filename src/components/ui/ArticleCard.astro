@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { site } from '@/config/site';
+
+export interface Props {
+  article: CollectionEntry<'articles'>;
+}
+const { article } = Astro.props;
+const { title, description, pubDate, category } = article.data;
+const href = `/articles/${article.id}/`;
+const linked = site.features.articlePages;
+
+const displayDate = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(pubDate);
+---
+
+<article class="group relative flex h-full flex-col border-t border-line pt-6">
+  <p class="eyebrow flex flex-wrap items-center gap-x-3 gap-y-1">
+    <span class="text-accent">{category}</span>
+    <span aria-hidden="true">·</span>
+    <time datetime={pubDate.toISOString()}>{displayDate}</time>
+  </p>
+  <h3 class="mt-4 text-title">
+    {linked ? (
+      <a href={href} class="after:absolute after:inset-0 group-hover:text-accent transition-colors">
+        {title}
+      </a>
+    ) : (
+      title
+    )}
+  </h3>
+  <p class="mt-3 text-[0.9375rem] leading-relaxed text-ink-muted">{description}</p>
+  {linked && (
+    <p class="mt-auto pt-5 text-[0.9375rem] font-medium" aria-hidden="true">
+      Read more <span class="inline-block transition-transform group-hover:translate-x-0.5">→</span>
+    </p>
+  )}
+</article>

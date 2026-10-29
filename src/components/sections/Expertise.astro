@@ -1,0 +1,49 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import { expertise } from '@/data/expertise';
+---
+
+<section id="expertise" aria-labelledby="expertise-title" class="section-space border-y border-line bg-surface">
+  <div class="page-container">
+    <SectionHeader index="02" label="Expertise" title="Areas of focus" id="expertise-title">
+      <p>The parts of search I spend most of my time thinking about and working on.</p>
+    </SectionHeader>
+
+    <ol class="mt-14 grid border-t border-line sm:grid-cols-2 lg:grid-cols-3">
+      {
+        expertise.map((area, i) => (
+          <li class="expertise-item border-b border-line py-8 sm:px-8 sm:first:pl-0">
+            <span class="font-mono text-xs text-accent tabular-nums" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="mt-4 text-title">{area.title}</h3>
+            <p class="mt-3 text-[0.9375rem] leading-relaxed text-ink-muted">{area.description}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  /* Column rules for the grid, without doubled borders. */
+  @media (min-width: 40rem) and (max-width: 63.999rem) {
+    .expertise-item:nth-child(2n) {
+      border-left: 1px solid var(--color-line);
+    }
+    .expertise-item:nth-child(2n + 1) {
+      padding-left: 0;
+    }
+  }
+  @media (min-width: 64rem) {
+    .expertise-item:not(:nth-child(3n + 1)) {
+      border-left: 1px solid var(--color-line);
+    }
+    .expertise-item:nth-child(3n + 1) {
+      padding-left: 0;
+    }
+    .expertise-item:nth-last-child(-n + 3) {
+      border-bottom: 0;
+    }
+  }
+</style>

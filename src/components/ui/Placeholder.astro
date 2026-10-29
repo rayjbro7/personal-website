@@ -1,0 +1,19 @@
+---
+/**
+ * A clearly marked "to be added" note. Renders nothing when
+ * site.showPlaceholders is false, so unfinished content never ships.
+ */
+import { site } from '@/config/site';
+
+export interface Props {
+  as?: 'p' | 'span' | 'li';
+  class?: string;
+}
+const { as: Tag = 'p', class: className } = Astro.props;
+---
+
+{site.showPlaceholders && (
+  <Tag class:list={['placeholder-note', className]} data-placeholder>
+    <slot />
+  </Tag>
+)}

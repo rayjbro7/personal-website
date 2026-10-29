@@ -1,0 +1,49 @@
+---
+import { site, navigation, profileLinks } from '@/config/site';
+import Placeholder from '@/components/ui/Placeholder.astro';
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-line bg-sunken">
+  <div class="page-container grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr] md:py-16">
+    <div>
+      <p class="font-display text-2xl leading-tight">
+        {site.name}<span class="text-accent" aria-hidden="true">.</span>
+      </p>
+      <p class="mt-2 text-ink-muted">{site.jobTitle} at {site.employer.name}</p>
+    </div>
+
+    <nav aria-label="Footer">
+      <p class="eyebrow mb-4">Navigate</p>
+      <ul class="grid grid-cols-2 gap-x-6 gap-y-2 text-[0.9375rem]">
+        {navigation.map((item) => (
+          <li><a href={item.href} class="link-underline text-ink-muted">{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div>
+      <p class="eyebrow mb-4">Elsewhere</p>
+      {
+        profileLinks.length > 0 ? (
+          <ul class="space-y-2 text-[0.9375rem]">
+            {profileLinks.map((profile) => (
+              <li>
+                <a href={profile.url} rel="me noopener" target="_blank" class="link-underline text-ink-muted">
+                  {profile.label}<span class="sr-only"> (opens in a new tab)</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <Placeholder class="inline-block">Profile links — add in src/config/site.ts</Placeholder>
+        )
+      }
+    </div>
+  </div>
+
+  <div class="page-container flex flex-col gap-2 border-t border-line py-6 text-sm text-ink-subtle sm:flex-row sm:justify-between">
+    <p>&copy; {year} {site.name}. All rights reserved.</p>
+    <p>Personal website. Views are my own.</p>
+  </div>
+</footer>

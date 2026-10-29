@@ -1,0 +1,75 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Placeholder from '@/components/ui/Placeholder.astro';
+import { roles } from '@/data/experience';
+---
+
+<section id="experience" aria-labelledby="experience-title" class="section-space">
+  <div class="page-container">
+    <SectionHeader index="03" label="Experience" title="Professional experience" id="experience-title" />
+
+    <ol class="mt-12" reversed>
+      {
+        roles.map((role) => (
+          <li class="grid gap-4 border-b border-line py-10 first:pt-0 md:grid-cols-[minmax(0,14rem)_1fr] md:gap-10">
+            <div class="text-[0.9375rem] text-ink-muted">
+              <p class="font-mono text-sm tabular-nums">
+                {role.startDate ? role.startDate : <Placeholder as="span">Start date</Placeholder>}
+                <span aria-hidden="true"> — </span>
+                <span class="sr-only"> to </span>
+                {role.endDate}
+              </p>
+              {role.location && <p class="mt-1">{role.location}</p>}
+            </div>
+
+            <article class="max-w-3xl">
+              <header class="flex flex-wrap items-baseline gap-x-3 gap-y-2">
+                <h3 class="text-title">
+                  {role.title}
+                  <span class="text-ink-subtle"> — </span>
+                  {role.organisationUrl ? (
+                    <a href={role.organisationUrl} class="link-underline" rel="noopener" target="_blank">
+                      {role.organisation}
+                    </a>
+                  ) : (
+                    role.organisation
+                  )}
+                </h3>
+                {role.current && (
+                  <span class="rounded-full border border-accent/40 bg-accent-soft px-2.5 py-0.5 font-mono text-[0.6875rem] tracking-wider text-accent-strong uppercase">
+                    Current
+                  </span>
+                )}
+              </header>
+
+              {role.summary ? (
+                <p class="mt-4 text-ink-muted">{role.summary}</p>
+              ) : (
+                <Placeholder class="mt-4">Role summary — one or two sentences on the scope of the role.</Placeholder>
+              )}
+
+              {role.highlights.length > 0 ? (
+                <ul class="mt-5 space-y-2 text-[0.9375rem] text-ink-muted">
+                  {role.highlights.map((item) => (
+                    <li class="flex gap-3">
+                      <span class="mt-[0.7em] h-px w-3 shrink-0 bg-accent" aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <Placeholder class="mt-3">Key responsibilities — add them in src/data/experience.ts</Placeholder>
+              )}
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+
+    {roles.length < 2 && (
+      <div class="mt-8 md:ml-[calc(14rem+2.5rem)]">
+        <Placeholder>Previous roles — add earlier positions to src/data/experience.ts</Placeholder>
+      </div>
+    )}
+  </div>
+</section>

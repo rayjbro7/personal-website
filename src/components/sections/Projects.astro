@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import ProjectCard from '@/components/ui/ProjectCard.astro';
+import { site } from '@/config/site';
+
+const projects = (
+  await getCollection(
+    'projects',
+    ({ data }) => !data.draft && (site.showPlaceholders || !data.placeholder),
+  )
+).sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="projects" aria-labelledby="projects-title" class="section-space border-y border-line bg-surface">
+  <div class="page-container">
+    <SectionHeader index="04" label="Projects" title="Selected projects" id="projects-title">
+      <p>
+        A selection of SEO work, written up as short case studies: the problem, how I approached it and
+        what changed as a result.
+      </p>
+    </SectionHeader>
+
+    {
+      projects.length > 0 ? (
+        <div class="mt-12 border-t border-line">
+          {projects.map((project, i) => <ProjectCard project={project} index={i + 1} />)}
+        </div>
+      ) : (
+        <p class="mt-12 border-t border-line pt-10 text-ink-muted md:pl-[calc(14rem+2.5rem)]">
+          Case studies are being written up and will appear here soon.
+        </p>
+      )
+    }
+  </div>
+</section>
